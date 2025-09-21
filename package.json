@@ -2,13 +2,13 @@
   "name": "civic-pulse",
   "version": "1.0.0",
   "scripts": {
-    "dev": "concurrently \"cd backend && source venv/bin/activate && uvicorn main_fixed:app --reload --port 8000\" \"cd frontend && npm run dev\"",
+    "dev": "concurrently \"cd backend && source venv/bin/activate && uvicorn main:app --reload --port 8000\" \"cd frontend && npm run dev\"",
     "build": "cd frontend && npm run build",
+    "build:all": "cd frontend && npm install && npm run build && cd ../backend && pip install -r requirements.txt",
     "build:export": "cd frontend && npm run build && npm run export",
-    "start": "concurrently \"cd backend && source venv/bin/activate && uvicorn main_fixed:app --host 0.0.0.0 --port 8000\" \"cd frontend && npm start\"",
-    "start:prod": "concurrently \"cd backend && source venv/bin/activate && uvicorn main_fixed:app --host 0.0.0.0 --port 8000\" \"cd frontend && npm run build && npm start\"",
-    "deploy": "cd deploy && ./deploy.sh",
-    "deploy:frontend": "cd frontend && npm run build && cd ../deploy && aws s3 sync ../frontend/out s3://$(aws cloudformation describe-stacks --stack-name civic-pulse --query 'Stacks[0].Outputs[?OutputKey==`FrontendBucketName`].OutputValue' --output text) --delete"
+    "start": "concurrently \"cd backend && source venv/bin/activate && uvicorn main:app --host 0.0.0.0 --port 8000\" \"cd frontend && npm start\"",
+    "start:prod": "concurrently \"cd backend && source venv/bin/activate && uvicorn main:app --host 0.0.0.0 --port 8000\" \"cd frontend && npm run build && npm start\"",
+    "deploy": "cd /home/ubuntu/civic-pulse && git pull origin main && docker-compose up -d --build"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
