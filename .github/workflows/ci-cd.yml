@@ -16,11 +16,8 @@ jobs:
     - name: Set up SSH Key
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/personal.pem
+        printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/personal.pem
         chmod 600 ~/.ssh/personal.pem
-        # Debug key format
-        head -1 ~/.ssh/personal.pem
-        tail -1 ~/.ssh/personal.pem
         ssh-keyscan ec2-16-171-52-187.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
 
     - name: Deploy via SSH
