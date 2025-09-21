@@ -1,0 +1,13 @@
+{
+  "name": "civic-pulse",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"cd backend && source venv/bin/activate && uvicorn main_fixed:app --reload --port 8000\" \"cd frontend && npm run dev\"",
+    "build": "cd frontend && npm run build",
+    "start": "concurrently \"cd backend && source venv/bin/activate && uvicorn main_fixed:app --host 0.0.0.0 --port 8000\" \"cd frontend && npm start\"",
+    "start:prod": "concurrently \"cd backend && source venv/bin/activate && uvicorn main_fixed:app --host 0.0.0.0 --port 8000\" \"cd frontend && npm run build && npm start\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
