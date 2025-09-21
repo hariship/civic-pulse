@@ -7,7 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: main
+    environment: prod
 
     steps:
     - name: Checkout Code
@@ -17,7 +17,7 @@ jobs:
       run: |
         mkdir -p ~/.ssh
         cat > ~/.ssh/personal.pem << 'EOF'
-        ${{ secrets.SSH_PRIVATE_KEY }}
+        ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         EOF
         chmod 600 ~/.ssh/personal.pem
         ssh-keyscan ec2-16-171-52-187.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
