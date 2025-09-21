@@ -5,6 +5,8 @@ import IncidentCard from '../components/ui/IncidentCard'
 import FilterSection from '../components/ui/FilterSection'
 import { useTheme } from '../components/ui/ThemeProvider'
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+
 interface Incident {
   fir_number: string
   type: string
@@ -53,7 +55,7 @@ const IncidentsPage: React.FC = () => {
   const fetchIncidentData = async () => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:8000/api/bangalore/real-data')
+      const response = await fetch(`${API_URL}/api/bangalore/real-data`)
       const data = await response.json()
 
       // Collect all recent incidents
@@ -244,7 +246,7 @@ const IncidentsPage: React.FC = () => {
     if (selectedType !== 'all') params.set('incident_type', selectedType)
 
     const queryString = params.toString()
-    const url = `http://localhost:8000/api/bangalore/incidents/csv${queryString ? '?' + queryString : ''}`
+    const url = `${API_URL}/api/bangalore/incidents/csv${queryString ? '?' + queryString : ''}`
 
     // Create a temporary link to trigger download
     const link = document.createElement('a')
@@ -257,7 +259,7 @@ const IncidentsPage: React.FC = () => {
 
   const downloadAllCivicData = () => {
     // Download comprehensive civic data from backend
-    const url = 'http://localhost:8000/api/bangalore/all-data/csv'
+    const url = `${API_URL}/api/bangalore/all-data/csv`
 
     const link = document.createElement('a')
     link.href = url
@@ -269,7 +271,7 @@ const IncidentsPage: React.FC = () => {
 
   const downloadRawGovernmentData = () => {
     // Download actual raw JSON responses from government APIs
-    const url = 'http://localhost:8000/api/bangalore/raw-sources/json'
+    const url = `${API_URL}/api/bangalore/raw-sources/json`
 
     const link = document.createElement('a')
     link.href = url
