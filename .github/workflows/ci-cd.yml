@@ -16,15 +16,15 @@ jobs:
     - name: Set up SSH Key
       run: |
         mkdir -p ~/.ssh
-        cat > ~/.ssh/personal.pem << 'EOF'
-        ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        cat > ~/.ssh/civic-pulse-deploy << 'EOF'
+        ${{ secrets.CIVIC_PULSE_SSH_PRIVATE_KEY }}
         EOF
-        chmod 600 ~/.ssh/personal.pem
+        chmod 600 ~/.ssh/civic-pulse-deploy
         ssh-keyscan ec2-16-171-52-187.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
 
     - name: Deploy via SSH
       run: |
-        ssh -i ~/.ssh/personal.pem ubuntu@ec2-16-171-52-187.eu-north-1.compute.amazonaws.com << 'EOF'
+        ssh -i ~/.ssh/civic-pulse-deploy ubuntu@ec2-16-171-52-187.eu-north-1.compute.amazonaws.com << 'EOF'
           cd ~/civic-pulse
           git pull origin main
           docker-compose down
